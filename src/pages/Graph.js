@@ -45,7 +45,6 @@ import {
   };
 export default function Graph(props) {
     const {id} = useParams();
-    const [graph,setGraph] = useState({});
     const [categories,setCategories]= useState([]);
     const [visitas,setVisitas]= useState([]);
 
@@ -64,7 +63,7 @@ export default function Graph(props) {
         };
       }, [categories,visitas]);
     useEffect(()=>{
-        fetch(`http://localhost:3001/api/histories/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/histories/${id}`)
             .then(response => response.json())
             .then(res =>{
                 let {data} = res;
@@ -85,13 +84,12 @@ export default function Graph(props) {
                
                 setVisitas(vis)
                 setCategories(nombres);
-                setGraph(data);
             
             });
     },[]);
   return (
     <div>
-        <div className={'mt-5 mb-5 px-20 bg-gray-100'}>
+        <div className={'mt-5 mb-5 px-20 mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 bg-gray-0'}>
         <Bar data={data} options={options} />
         </div>
     </div>
