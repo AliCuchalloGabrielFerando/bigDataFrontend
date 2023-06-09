@@ -8,8 +8,8 @@ export default function NavBarMaterial() {
     useEffect(() => {
         window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
     }, []);
-    const showActive = (isActive)=>{
-        return isActive? ' text-xl bold text-blue-500 m-2':'text-xl bold text-gray-400 m-2'
+    const showActive = (isActive) => {
+        return isActive ? ' text-xl bold text-blue-500 m-2' : 'text-xl bold text-gray-400 m-2'
     }
     const navList = (
         <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
@@ -19,8 +19,8 @@ export default function NavBarMaterial() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <NavLink className={({isActive})=>showActive(isActive)} 
-                to='/user'>Usuarios</NavLink>
+                <NavLink className={({ isActive }) => showActive(isActive)}
+                    to='/user'>Usuarios</NavLink>
             </Typography>
             <Typography
                 as="li"
@@ -28,8 +28,8 @@ export default function NavBarMaterial() {
                 color="blue-gray"
                 className="p-1 font-normal"
             >
-                <NavLink className={({isActive})=>showActive(isActive)}
-                to='/file'>Archivos</NavLink>
+                <NavLink className={({ isActive }) => showActive(isActive)}
+                    to='/file'>Archivos</NavLink>
             </Typography>
         </ul>
     );
@@ -40,7 +40,8 @@ export default function NavBarMaterial() {
                 <Typography
                     className="mr-4 py-1.5 font-medium cursor-default"
                 >
-                  <span className="text-2xl text-blue-500 bold"> Browser History Graph</span>  
+                    <NavLink className={({ isActive }) => showActive(isActive)} to='/'>
+                        Browser History Graph </NavLink>
                 </Typography>
                 <div className="hidden lg:block">{navList}</div>
 

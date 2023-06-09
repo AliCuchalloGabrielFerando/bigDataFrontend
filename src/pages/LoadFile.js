@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Select, Option, Typography, Button } from "@material-tailwind/react";
 import TableGraphMaterial from '../components/TableGraphMaterial';
+import AlertModalMaterial from '../components/AlertModalMaterial';
 export default function LoadFile() {
   const [file, setFile] = useState();
   const [users, setUsers] = useState([]);
+  const [openModal, setOpenModal] = React.useState(false);
   const [graphics, setGraphics] = useState([]);
   const [indexUser, setIndexUser] = useState();
   const navigate = useNavigate();
@@ -32,6 +34,7 @@ export default function LoadFile() {
   const handleSubmit = (e) => {
 
     e.preventDefault();
+    setOpenModal(true)
     let fileRead = new FileReader();
     // se captura el archivo y obtiene el historial que es enviando a la funcion sendData
     fileRead.onload = e => {
@@ -54,12 +57,16 @@ export default function LoadFile() {
     fetch(`${process.env.REACT_APP_API_URL}/histories`, requestOptions)
       .then(response => response.json())
       .then(res => {
+        setOpenModal(false)
         reload();
       });
   }
   const eliminar = (_id) => {
     fetch(`${process.env.REACT_APP_API_URL}/histories/${_id}`, { method: 'DELETE' })
-      .then(() => reload());
+      .then(() => {
+        setOpenModal(false)
+        reload()}
+        );
 
   }
   const reload = async () => {
@@ -82,8 +89,8 @@ export default function LoadFile() {
   return (
     <div className="mx-auto max-w-screen-xl py-2 px-4 lg:px-8 lg:py-4 bg-gray-700 rounded-lg">
       <div className='px-5 mt-2 pb-5 bg-blue-200 justify-items-center rounded-lg'>
-
-        <div className='grid justify-items-center'>
+      <div className='grid justify-items-center'>
+      {!openModal?
           <form onSubmit={handleSubmit}>
             <div className='flex flex-col p-5 m-2 items-center gap-4'>
               <Typography className='cursor-default' variant="h5">Registre Archivo</Typography>
@@ -97,7 +104,10 @@ export default function LoadFile() {
               <Button size="lg" type="submit">Procesar</Button>
             </div>
           </form>
-        </div>
+        
+        : <AlertModalMaterial/>
+         }
+         </div>
         <TableGraphMaterial graphicsData={graphics} ver={ver} eliminar={eliminar} />
       </div>
     </div>

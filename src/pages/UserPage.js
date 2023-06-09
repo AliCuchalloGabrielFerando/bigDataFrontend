@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Input, Button, Typography } from "@material-tailwind/react";
 import TableUserMaterial from '../components/TableUserMaterial';
-
+//import AlertModalMaterial from '../components/AlertModalMaterial';
 export default function UserPage() {
   const [name, setName] = useState("");
   const [age, setAge] = useState();
